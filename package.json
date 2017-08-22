@@ -1,8 +1,8 @@
 {
-    "name": "sterling-session",
-    "homepage": "https://github.com/khrome/sterling-session",
+    "name": "sterling-token",
+    "homepage": "https://github.com/khrome/sterling-token",
     "version": "0.0.1",
-    "main": "sterling-session.js",
+    "main": "sterling-token.js",
     "description": "Basic authentication and presence for sterling",
     "keywords": [
         "session",
@@ -11,12 +11,12 @@
     "author": "Abbey Hawk Sparrow <@khrome> (http://patternweaver.com)",
     "contributors": [],
     "bugs": {
-        "url": "https://github.com/khrome/sterling-session/issues"
+        "url": "https://github.com/khrome/sterling-token/issues"
     },
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git://github.com/khrome/sterling-session.git"
+        "url": "git://github.com/khrome/sterling-token.git"
     },
     "dependencies": {
         "sterling": "*",

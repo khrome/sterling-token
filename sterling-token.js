@@ -1,17 +1,17 @@
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['sterling', 'async-arrays'], factory);
+        define(['sterling', 'async-arrays', 'uuid'], factory);
     } else if (typeof module === 'object' && module.exports) {
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like environments that support module.exports,
         // like Node.
-        module.exports = factory(require('sterling'), require('async-arrays'));
+        module.exports = factory(require('sterling'), require('async-arrays'), require('uuid'));
     } else {
         // Browser globals (root is window)
-        root.Sterling.Token = factory(root.Sterling, root.AsyncArrays);
+        root.Sterling.Token = factory(root.Sterling, root.AsyncArrays, root.uuid);
     }
-}(this, function (Sterling, arrays) {
+}(this, function (Sterling, arrays, uuid) {
     //todo: cookie support
     var tokens = [];
     var gc = false;
@@ -94,8 +94,9 @@
                 sterlingInstance.addRoute(route, wrappedHandlers);
             }
             if(sterlingInstance.addSecureRoute){
-                sterlingInstance.addSecureRoute(prefix+'/token/:session/new', {get:function(session){
+                sterlingInstance.addSecureRoute(prefix+'/token/new/:session', {get:function(session){
                     var ob = this;
+                    var id = uuid.v4();
                     controls.createToken(token, function(id){
                         if(valid){
                             ob.res.end(JSON.stringify({
@@ -110,7 +111,7 @@
                     });
                 }});
             }
-            sterlingInstance.addRoute(prefix+'/token/:token', {get:function(token){
+            /*sterlingInstance.addRoute(prefix+'/token/:id', {get:function(token){
                 var ob = this;
                 controls.validToken(token, function(valid){
                     if(valid){
@@ -124,7 +125,7 @@
                         }));
                     }
                 });
-            }});
+            }});*/
             return controls;
         }
     };
