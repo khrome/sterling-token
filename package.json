@@ -1,7 +1,7 @@
 {
     "name": "sterling-token",
     "homepage": "https://github.com/khrome/sterling-token",
-    "version": "0.0.2",
+    "version": "0.1.0",
     "main": "sterling-token.js",
     "description": "Basic authentication and presence for sterling",
     "keywords": [

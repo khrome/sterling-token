@@ -32,7 +32,7 @@
                                 moment : Date.now(),
                                 value : id
                             });
-                            cb(id);
+                            cb(err, id);
                         }
 
                     });
@@ -77,9 +77,6 @@
                     wrappedHandlers[method] = function(token){
                         var args = Array.prototype.slice.call(arguments);
                         var ob = this;
-                        /*controls.handleRequest(ob.res, ob.req, function(){
-                            handler.apply(ob, args);
-                        });*/
                         SterlingToken.validToken(token, function(valid){
                             if(valid){
                                 handler.apply(ob, args);
@@ -96,9 +93,8 @@
             if(sterlingInstance.addSecureRoute){
                 sterlingInstance.addSecureRoute(prefix+'/token/new/:session', {get:function(session){
                     var ob = this;
-                    var id = uuid.v4();
-                    controls.createToken(token, function(id){
-                        if(valid){
+                    controls.createToken(function(err, id){
+                        if(!err){
                             ob.res.end(JSON.stringify({
                                 success: true,
                                 token: id
@@ -111,13 +107,13 @@
                     });
                 }});
             }
-            /*sterlingInstance.addRoute(prefix+'/token/:id', {get:function(token){
+            sterlingInstance.addRoute(prefix+'/token/:id', {get:function(token){
                 var ob = this;
                 controls.validToken(token, function(valid){
                     if(valid){
                         ob.res.end(JSON.stringify({
                             success: true,
-                            data: req.session
+                            data: ob.res.session
                         }));
                     }else{
                         ob.res.end(JSON.stringify({
@@ -125,9 +121,12 @@
                         }));
                     }
                 });
-            }});*/
+            }});
             return controls;
         }
+    };
+    SterlingToken.newTokenID = function(cb){
+        return cb(undefined, uuid.v4());
     };
     return SterlingToken;
 }));
